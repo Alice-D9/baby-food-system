@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>宝宝辅食大全 - 1岁宝宝专用（全面版）</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+            overflow-x: auto;
+            padding: 10px 20px;
+            gap: 10px;
+        }
+        
+        .nav-tab {
+            padding: 12px 20px;
+            border: none;
+            background: white;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            transition: all 0.3s;
+            white-space: nowrap;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .nav-tab:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+        
+        .nav-tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .controls {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .meal-filter-section {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .meal-filter-btn {
+            padding: 8px 16px;
+            border: 2px solid #e9ecef;
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .meal-filter-btn:hover {
+            border-color: #667eea;
+            background: #f0f3ff;
+        }
+        
+        .meal-filter-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+        }
+        
+        .meal-type-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        
+        .meal-type-breakfast {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .meal-type-lunch {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .meal-type-dinner {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+        
+        .meal-type-snack {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        
+        .meal-selector {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .meal-selector label {
+            font-weight: bold;
+            color: #495057;
+        }
+        
+        .meal-selector select {
+            padding: 10px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .date-display {
+            text-align: center;
+            font-size: 20px;
+            color: #495057;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+        
+        .category-view {
+            display: none;
+        }
+        
+        .category-view.active {
+            display: block;
+        }
+        
+        .recipes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+        
+        .recipe-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .recipe-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border-color: #667eea;
+        }
+        
+        .recipe-header {
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .recipe-body {
+            padding: 20px;
+        }
+        
+        .recipe-section {
+            margin-bottom: 15px;
+        }
+        
+        .recipe-section h4 {
+            color: #667eea;
+            margin-bottom: 8px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .recipe-section p, .recipe-section ol {
+            color: #6c757d;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+        
+        .recipe-section ol {
+            padding-left: 20px;
+            margin-top: 8px;
+        }
+        
+        .recipe-section li {
+            margin-bottom: 8px;
+        }
+        
+        .recipe-note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 13px;
+            color: #856404;
+            border-radius: 5px;
+        }
+        
+        .nutrition-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+        
+        .nutrition-tag {
+            background: #e7f3ff;
+            color: #0066cc;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .modal-header {
+            padding: 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            position: relative;
+        }
+        
+        .modal-close {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            font-size: 28px;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            line-height: 1;
+        }
+        
+        .modal-close:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        
+        .modal-body {
+            padding: 30px;
+        }
+        
+        .meals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .meal-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        
+        .meal-header {
+            padding: 15px;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .breakfast-header {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+        
+        .lunch-header {
+            background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+        }
+        
+        .dinner-header {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #495057;
+        }
+        
+        .meal-body {
+            padding: 20px;
+        }
+        
+        .recipe-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #212529;
+            margin-bottom: 10px;
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #6c757d;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .recipes-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .meals-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .nav-tabs {
+                justify-content: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🍼 宝宝辅食大全</h1>
+            <p>专为 1 岁宝宝设计 • 营养均衡 • 详细步骤 • 种类丰富</p>
+        </div>
+        
+        <div class="nav-tabs" id="navTabs"></div>
+        
+        <div class="controls">
+            <div class="meal-filter-section">
+                <span style="font-weight: bold; color: #667eea; margin-right: 10px;">按餐次筛选：</span>
+                <button class="meal-filter-btn active" onclick="filterByMealType('all')">全部</button>
+                <button class="meal-filter-btn" onclick="filterByMealType('breakfast')">🌅 早餐</button>
+                <button class="meal-filter-btn" onclick="filterByMealType('lunch')">☀️ 午餐</button>
+                <button class="meal-filter-btn" onclick="filterByMealType('dinner')">🌙 晚餐</button>
+                <button class="meal-filter-btn" onclick="filterByMealType('snack')">🍎 加餐</button>
+            </div>
+            <button class="btn btn-primary" onclick="generateDailyMeals()">🎲 智能生成今日食谱</button>
+            <button class="btn btn-secondary" onclick="showHistory()">📋 历史记录</button>
+        </div>
+        
+        <div class="content">
+            <div class="date-display" id="dateDisplay"></div>
+            <div id="categoryViews"></div>
+        </div>
+        
+        <div class="footer">
+            <p>💡 提示：所有食材请确保新鲜，制作时注意卫生。如宝宝有特殊过敏情况，请咨询医生。</p>
+        </div>
+    </div>
+
+    <!-- 详情模态框 -->
+    <div class="modal" id="recipeModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span id="modalTitle"></span>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- 食谱生成模态框 -->
+    <div class="modal" id="mealsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span>今日食谱</span>
+                <button class="modal-close" onclick="closeMealsModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="date-display" id="modalDateDisplay"></div>
+                <div class="meals-grid" id="mealsGrid"></div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="btn btn-primary" onclick="generateDailyMeals()">🔄 重新生成</button>
+                    <button class="btn btn-secondary" onclick="printMeals()">🖨️ 打印</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="baby-food-data.js"></script>
+    <script src="baby-food-app.js"></script>
+</body>
+</html>
+
